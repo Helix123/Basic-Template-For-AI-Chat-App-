@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shirone</title>
+    <style>
+       Make your own css
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+          $("#submitBtn").click(function () {
+            var userInput = $("#userInput").val();
+            if (userInput !== "") {
+              $("#chatbox").append(
+                '<div class="message user-message">' + userInput + "</div><div class='clearfix'></div>"
+              );
+              $("#userInput").val("");
+              $.get("/get", { msg: userInput }, function (data) {
+                $("#chatbox").append(
+                  '<div class="message bot-message">' + data + "</div><div class='clearfix'></div>"
+                );
+                $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+              });
+            }
+          });
+        });
+      </script>      
+</head>
+<body>
+    <div class="container">
+        <div id="chatbox"></div>
+        <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off">
+        <button id="submitBtn">Send</button>
+    </div>
+</body>
+</html>
